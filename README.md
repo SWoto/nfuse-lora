@@ -18,7 +18,7 @@ Reference setup for [The Things Network](http://thethingsnetwork.org/) gateways 
 1. Power the board and wait a few seconds to connect to it.
 
 # Installing Package Fowarder and Andrew's Monitor
-Andrew made some really cool bash files to help installing the package fowarder from [picoGW](https://github.com/Lora-net/picoGW_packet_forwarder). Now, instead of clone two repositories, building those two and some other steps, now we just need clone one rep and execute one bash file. Simple, right?   
+Andrew made some really cool bash files to help installing the package fowarder from [picoGW](https://github.com/Lora-net/picoGW_packet_forwarder). Now, instead of clone two repositories, building those two and some other steps, now we just need clone one rep and execute one bash file. Simple, right? It also comes with a cool service that show us the status and last updates (logs) on the chip.
 If you have any questions, you can check [here](https://thomasflummer.com/projects/lora-gateway/). This is one of the best tutorials explaining step by step on how to install it (without this repository).
 
 1. update the OS and install git
@@ -35,7 +35,10 @@ chmod +x *.sh
 ```
 3. In the `start.sh` file, change the `SX1301_RESET_BCM_PIN` value to the Reset Pin number of your board.
 
-4. Next run the to start the install process
+4. Before installing it, :warning: beware that this process uses US LoRaWAN configuration. If you want to swap to the EU version, just change the `global_config.json` to the desired one found [here](https://github.com/Lora-net/picoGW_packet_forwarder/tree/master/lora_pkt_fwd/cfg) and also change the server address on the `start.sh` file to `router.eu.thethings.network`.  
+You might be asking me "But only US and EU? What about the others?". As an answer to these questions, altough I haven't tested it yet, you can take a look to the [TTN global_config files](https://github.com/TheThingsNetwork/gateway-conf) and, please, let me know if it worked. Don't forget to change [the server address](https://www.thethingsnetwork.org/docs/gateways/packet-forwarder/semtech-udp.html#router-addresses).
+
+5. Next run the to start the install process
 ```bash
 ./install.sh
 ```
