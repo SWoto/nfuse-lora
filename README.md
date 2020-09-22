@@ -1,60 +1,80 @@
 # The Things Network: n-Fuse 
 
+<img src="https://www.thethingsnetwork.org/spa/static/img/b403019.png" height="150"/><img src="https://www.n-fuse.co/assets/products/lrwccx/lrwccx-mpcie_w_shield_w_label_500.png" height="150"/>
+
 Reference setup for [The Things Network](http://thethingsnetwork.org/) gateways based on the n-Fuse mPCIe USB concentrator
 
-Plug mPCIe Lora Concentrator card into unit, note which socket the card has been installed into, take care to fit the antenna BEFORE power up.
+# Table of Contents
+- [Setting up the Gateway](#setting-up-the-gateway)
+- [Installing Package Fowarder and Andrew's Monitor](#installing-package-fowarder-and-andrews-monitor)
+- [Setting up your device on TTN](#setting-up-your-device-on-ttn)
+- [Useful Knowledege](#useful-knowledege)
 
-Connect unit to ethernet and log in as root user 
+# Setting up the Gateway
 
-update the OS and install git, answer "Y" to any `apt-get` install questions
+1. Plug mPCIe n-Fuse Lora Concentrator card into unit.
+1. Fit the antenna BEFORE power up.
+1. Connect the Ethernet cable
+1. Power the board and wait a few seconds to connect to it.
 
-    apt-get update
-    apt-get upgrade
-    apt-get install git
+# Installing Package Fowarder and Andrew's Monitor
+Andrew made some really cool bash files to help installing the package fowarder from [picoGW](https://github.com/Lora-net/picoGW_packet_forwarder). Now, instead of clone two repositories, building those two and some other steps, now we just need clone one rep and execute one bash file. Simple, right?   
+If you have any questions, you can check [here](https://thomasflummer.com/projects/lora-gateway/). This is one of the best tutorials explaining step by step on how to install it (without this repository).
 
+1. update the OS and install git
+```bash
+sudo apt-get update && sudo apt-get upgrade -y
+apt-get install git -y
+```
 
-Run the below to clone this repository 
+2. Run the below to clone this repository and make the `.sh` files executables.
+```bash
+git clone https://github.com/SWoto/nfuse-lora.git
+cd nfuse-lora
+chmod +x *.sh
+```
 
-    git clone https://github.com/mypiandrew/nfuse-lora.git
-    cd nfuse-lora
-    chmod +x *.sh
+3. Next run the to start the install process
+```bash
+./install.sh
+```
+When it finishes executing, the gateway will reboot. After this process, you should procced to configure your unit on [The Things Network](https://www.thethingsnetwork.org/).
+
+# Setting up your device on TTN
+
+1. Log back in and type the following  comand to get the gateway's EUI*:
+```bash
+cd /opt/ttn-gateway/bin/
+./showeui.sh
+```
+You output will be like this:
+```bash
+#################################################################
+
+                  GATEWAY EUID = 1234567891011121
+
+    Open TTN console and register your gateway using your EUI: 
+         https://console.thethingsnetwork.org/gateways 
+
+ #################################################################
+ ```
+* _LoRaWAN devices have a 64 bit unique identifier (DevEUI) that is assigned to the device by the chip manufacturer._
+
+2. Goto the [TTN's](https://console.thethingsnetwork.org/gateways) console and register a new account then procced adding a new gateway.
   
-Next edit `start.sh` (using `vi` or `nano`) and alter the top reset pin config lines based on the unit you are using the card in
-
-    # Reset PIN -- uncomment only one
-    # MyPi IoT Integrator board mPCIe slot
-    # GPIO23 - mPCIe Modem Emergency Reset (Fit LK12 to enable)
-    SX1301_RESET_BCM_PIN=23
-    # EdgeGateway mPCIe2 (Left hand side mPCIe)
-    # GPIO22 - mPCIe-2 Modem Emergency Reset 
-    #SX1301_RESET_BCM_PIN=22
-    # GPIO41 - mPCIe-1 Modem Emergency Reset 
-    # EdgeGateway mPCIe1 (Right hand side mPCIe)
-    #SX1301_RESET_BCM_PIN=41
-
-Next run the to start the install process
-
-    ./install.sh
-
-On completion you will next need to configure your unit on "The Things Network" (TTN) to do this we first need the EUI of the unit.
-
-Log back in and type the following :
-
-    cd /opt/ttn-gateway/bin/
-    ./showeui.sh
-
-The system will then print out the EUI of the unit
-
-Goto the website below and register a new account, adding a new gateway 
+3. When registering your gateway, check "I'm using the legacy packet forwarder" to insert the **GATEWAY EUID**
+[Legacy Option](/images/TTNlegacyOption.png)
   
-   https://console.thethingsnetwork.org/
+4. After your registration is done, remmeber that it may take a while for the system to attempt a connection and to show as "connected" on TTN dashboard. 
 
-  
-Note that it takes between 1-10mins for the system to attempt a connection and to show as "connected" on TTN dashboard
+# Commands
 
-
-Information about the state of the unit can be found by running the command below :
-
-    service ttn-gateway status
-
+- Information about the state of the unit can be found by running the command below :
+```bash
+service ttn-gateway status
+```
+- Another command that show similar information but less complete:
+```bash
+sudo tail -f /var/log/syslog
+```
 
