@@ -63,8 +63,8 @@ You output will be like this:
 2. Goto the [TTN's](https://console.thethingsnetwork.org/gateways) console and register a new account then procced adding a new gateway.
   
 3. When registering your gateway, check "I'm using the legacy packet forwarder" to insert the **GATEWAY EUID**
-[Legacy Option](/images/TTNlegacyOption.png)
-  
+<img src="/images/TTNlegacyOption.png" width="500"/>
+
 4. After your registration is done, remmeber that it may take a while for the system to attempt a connection and to show as "connected" on TTN dashboard. 
 
 # Commands
