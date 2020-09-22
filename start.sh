@@ -1,7 +1,7 @@
 #! /bin/bash
 
 # Reset PIN
-SX1301_RESET_BCM_PIN=45
+SX1301_RESET_BCM_PIN=23
 
 echo "Resetting Module..."
 echo "$SX1301_RESET_BCM_PIN"  > /sys/class/gpio/export
