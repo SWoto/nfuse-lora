@@ -8,7 +8,7 @@ Reference setup for [The Things Network](http://thethingsnetwork.org/) gateways 
 - [Setting up the Gateway](#setting-up-the-gateway)
 - [Installing Package Fowarder and Andrew's Monitor](#installing-package-fowarder-and-andrews-monitor)
 - [Setting up your device on TTN](#setting-up-your-device-on-ttn)
-- [Useful Knowledege](#useful-knowledege)
+- [Commands](#commands)
 
 # Setting up the Gateway
 
