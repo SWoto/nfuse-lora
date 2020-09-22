@@ -1,15 +1,7 @@
 #! /bin/bash
 
-# Reset PIN -- uncomment only one
-# MyPi IoT Integrator board mPCIe slot
-# GPIO23 - mPCIe Modem Emergency Reset (Fit LK12 to enable)
-SX1301_RESET_BCM_PIN=23
-# EdgeGateway mPCIe2 (Left hand side mPCIe)
-# GPIO22 - mPCIe-2 Modem Emergency Reset 
-#SX1301_RESET_BCM_PIN=22
-# GPIO41 - mPCIe-1 Modem Emergency Reset 
-# EdgeGateway mPCIe1 (Right hand side mPCIe)
-#SX1301_RESET_BCM_PIN=41
+# Reset PIN
+SX1301_RESET_BCM_PIN=45
 
 echo "Resetting Module..."
 echo "$SX1301_RESET_BCM_PIN"  > /sys/class/gpio/export
@@ -36,9 +28,9 @@ then
         GATEWAY_EUI=`/opt/ttn-gateway/picoGW_hal/util_chip_id/util_chip_id`		
         echo "GATEWAY EUI = [$GATEWAY_EUI]"
 	echo "$GATEWAY_EUI" >euid.txt
-        sed -i --follow-symlinks "s|AA555A0000240409|$GATEWAY_EUI|g" ./global_conf.json
-        sed -i --follow-symlinks 's/localhost/router.eu.thethings.network/g' ./global_conf.json
-        sed -i --follow-symlinks 's/1680/1700/g' ./global_conf.json
+        sed -i --follow-symlinks "s|AA555A0000240409|$GATEWAY_EUI|g" ./global_conf.json #replace gateway ID
+        sed -i --follow-symlinks 's/localhost/router.us.thethings.network/g' ./global_conf.json # replace server address
+        sed -i --follow-symlinks 's/1680/1700/g' ./global_conf.json # replace server port
 
 fi
 echo "Starting Packet Forwarder..."

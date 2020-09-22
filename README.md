@@ -33,8 +33,9 @@ git clone https://github.com/SWoto/nfuse-lora.git
 cd nfuse-lora
 chmod +x *.sh
 ```
+3. In the `start.sh` file, change the `SX1301_RESET_BCM_PIN` value to the Reset Pin number of your board.
 
-3. Next run the to start the install process
+4. Next run the to start the install process
 ```bash
 ./install.sh
 ```
@@ -46,6 +47,7 @@ When it finishes executing, the gateway will reboot. After this process, you sho
 ```bash
 cd /opt/ttn-gateway/bin/
 ./showeui.sh
+cd ${OLDPWD}
 ```
 You output will be like this:
 ```bash
@@ -77,4 +79,8 @@ service ttn-gateway status
 ```bash
 sudo tail -f /var/log/syslog
 ```
-
+- If you want to **UNINSTALL** it, please run the command below, but be aware that this will erase all the previus configurations.
+```bash
+cd ~/nfuse-lora
+sudo ./uninstall.sh
+```

@@ -26,6 +26,10 @@ cd $INSTALL_DIR
 git clone https://github.com/Lora-net/picoGW_packet_forwarder.git
 git clone https://github.com/Lora-net/picoGW_hal.git 
 
+# change global_config.json to US version
+echo "Installation set to US LoRaWAN, pelase be sure to check if this is what you need"
+rm picoGW_packet_forwarder/lora_pkt_fwd/global_conf.json
+cp picoGW_packet_forwarder/lora_pkt_fwd/cfg/global_conf_PicoV1p0_US.json picoGW_packet_forwarder/lora_pkt_fwd/global_conf.json
 
 cd picoGW_hal
 make clean all
@@ -38,7 +42,6 @@ ln -s $INSTALL_DIR/picoGW_packet_forwarder/lora_pkt_fwd/lora_pkt_fwd ./bin/lora_
 ln -s $INSTALL_DIR/picoGW_packet_forwarder/lora_pkt_fwd/global_conf.json ./bin/global_conf.json
 
 # Start packet forwarder as a service
-
 systemctl enable ttn-gateway.service
 
 echo "Installation completed, system will reboot shortly to activate system"
